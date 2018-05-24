@@ -22,7 +22,7 @@ use MicrosoftAzure\Storage\Table\TableRestProxy;
 use MicrosoftAzure\Storage\Common\ServiceException;
 
 // Create table REST proxy.
-$connectionString = "DefaultEndpointsProtocol=https;AccountName=storagesoracom;AccountKey=fU9GepJPZu7/w3BpZn4O99Bj5AsE7KLfxN4qdZskTljcqxG8FX9DSZRtHo2CTNz3g3QV+52z9aJse/d9ww1ftQ==;EndpointSuffix=core.windows.net"
+$connectionString = "DefaultEndpointsProtocol=https;AccountName=storagesoracom;AccountKey=fU9GepJPZu7/w3BpZn4O99Bj5AsE7KLfxN4qdZskTljcqxG8FX9DSZRtHo2CTNz3g3QV+52z9aJse/d9ww1ftQ==;EndpointSuffix=core.windows.net";
 $tableClient = TableRestProxy::createTableService($connectionString);
 
 $filter = "PartitionKey eq 'tasksSeattle'";
