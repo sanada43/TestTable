@@ -17,13 +17,32 @@
 **/
 namespace MicrosoftAzure\Storage\Samples;
 require_once "vendor/autoload.php";
-require_once "./table_basic.php";
-require_once "./table_advanced.php";
 
-$tableBasicSamples = new TableBasicSamples();
-$tableBasicSamples->runAllSamples();
+use MicrosoftAzure\Storage\Table\TableRestProxy;
+use MicrosoftAzure\Storage\Common\ServiceException;
 
-$tableAdvancedSamples = new TableAdvancedSamples();
-$tableAdvancedSamples->runAllSamples();
+// Create table REST proxy.
+$connectionString = "DefaultEndpointsProtocol=https;AccountName=storagesoracom;AccountKey=fU9GepJPZu7/w3BpZn4O99Bj5AsE7KLfxN4qdZskTljcqxG8FX9DSZRtHo2CTNz3g3QV+52z9aJse/d9ww1ftQ==;EndpointSuffix=core.windows.net"
+$tableClient = TableRestProxy::createTableService($connectionString);
+
+$filter = "PartitionKey eq 'tasksSeattle'";
+
+try    {
+    $result = $tableClient->queryEntities("OCESensror01", $filter);
+}
+catch(ServiceException $e){
+    // Handle exception based on error codes and messages.
+    // Error codes and messages are here:
+    // https://docs.microsoft.com/rest/api/storageservices/Table-Service-Error-Codes
+    $code = $e->getCode();
+    $error_message = $e->getMessage();
+    echo $code.": ".$error_message."<br />";
+}
+
+$entities = $result->getEntities();
+
+foreach($entities as $entity){
+    echo $entity->getPartitionKey().":".$entity->getRowKey()."<br />";
+}
 
 ?>
